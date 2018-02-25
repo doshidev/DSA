@@ -10,8 +10,8 @@ public class BoggleBoard {
         int h = 4;
         String s = "mapoeterdenildhc";
         String word = "";
-        char[][] visited = newBoard(w, h, 0, null);
-        char[][] myBoard = newBoard(w, h, 1, s);
+        boolean[][] visited = new boolean[w][h];
+        char[][] myBoard = newBoard(w, h, s);
         String[] soln = new String[195];
         soln[0] = "aero";
         soln[1] = "apter";
@@ -217,55 +217,28 @@ public class BoggleBoard {
         }
     }
     
-    private static void boggle(char[][] board, char[][] visited, String word, String[]soln, int x, int y){
-        
-        if(visited[x][y] == '1')
+    private static void boggle(char[][] board, boolean[][] visited, String word, String[]soln, int x, int y){
+        if(x < 0 || x >= board[0].length || y < 0 || y >= board.length)
+            return;
+
+        if(visited[x][y])
             return;
         
-        visited[x][y] = '1';
+        visited[x][y] = true;
         word += board[x][y];
         
         if(Arrays.asList(soln).contains(word))
             System.out.println(word);
-        
-        
-        int[][] n = new int[8][2];
-        n[0][0] = x;
-        n[0][1] = y-1; // top
-    
-        n[1][0] = x;
-        n[1][1] = y + 1;   // bottom
-    
-        n[2][0] = x - 1;
-        n[2][1] = y;    // left
-    
-        n[3][0] = x + 1;
-        n[3][1] = y;    // right
-    
-        n[4][0] = x - 1;
-        n[4][1] = y - 1;    // top left
-    
-        n[5][0] = x + 1;
-        n[5][1] = y + 1;    // bottom right
-    
-        n[6][0] = x - 1;
-        n[6][1] = y + 1;    // bottom left
-    
-        n[7][0] = x + 1;
-        n[7][1] = y - 1;    // top right
-        
-        for(int i = 0; i < 8; i++){
-            int x1 = n[i][0];
-            int y1 = n[i][1];
-            
-            if(x1 >= 0 && x1 < board[0].length && y1 >= 0 && y1 < board.length){
-                boggle(board, visited, word, soln, x1, y1);
+
+        for (int newX = x - 1; newX <= newX + 1; newX++) {
+            for (int newY = y - 1; newY <= y + 1; newY++) {
+                boggle(board, visited, word, soln, newX, newY);
             }
         }
-        visited[x][y] = '0';
+        visited[x][y] = false;
     }
     
-    private static char[][] newBoard(int w, int h, int type, String s){
+    private static char[][] newBoard(int w, int h, String s){
         char[][] board = new char[h][w];
         char c;
         int p = 0;
@@ -273,16 +246,12 @@ public class BoggleBoard {
         
         for(int i = 0; i < h; i++){
             for(int j = 0; j < w; j++){
-                if (type == 1){
-                    if(s.length() == w*h){
-                        c = s.toCharArray()[p++];
-                    } else {
-                        c = (char) (r.nextInt(26) + 97);
-                    }
-                    board[i][j] = c;
+                if(s.length() == w*h){
+                    c = s.toCharArray()[p++];
                 } else {
-                    board[i][j] = '0';
+                    c = (char) (r.nextInt(26) + 97);
                 }
+                board[i][j] = c;
                 System.out.print("\t" + board[i][j]);
             }
             System.out.print("\n");
