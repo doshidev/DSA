@@ -1,6 +1,6 @@
 public class SieveGoldbach {
     public static void main(String[] args)  {
-        int[] array = new int[100];
+        int[] array = new int[10000];
         sieve(array);
 
         System.out.println("Prime as per the sieve of eratosthenes");
