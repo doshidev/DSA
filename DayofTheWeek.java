@@ -3,7 +3,7 @@
  */
 public class DayofTheWeek {
     public static void main(String[] args) {
-        System.out.println(findWeekDay(16,6,2018));
+        System.out.println(findWeekDay(01,01,2000));
     }
 
     public static String findWeekDay(int day, int month, int year) {
@@ -12,9 +12,17 @@ public class DayofTheWeek {
         int daysTillDate = 0;
 
         // Add days in Years
-        for (int i = 2000; i < year; i++) {
-            daysTillDate += isLeap(i) ? 366 : 365;
-        }
+        /** for (int i = 2000; i < year; i++) {
+             daysTillDate += isLeap(i) ? 366 : 365;
+        } **/
+
+        // Try in constant time
+        int diff = year - 1999;
+        // add 365 for all years
+        daysTillDate += diff * 365;
+        // add leaps years count
+        daysTillDate += (int) (diff / 4) - (int) ((diff / 100) - (diff / 400));
+
 
         // Add days months
         for (int i = 1; i < month; i++) {
