@@ -8,23 +8,25 @@ public class BSTSuccessor {
     static void test(int[] input, int[] test) {
         Node bstRoot = createBST(input);
         for (int i = 0; i < test.length; i++) {
-            System.out.println("Successor of " + test[i] + " is " + findPredecessor(bstRoot, test[i]));
+            System.out.println("Successor of " + test[i] + " is " + findSuccessor(bstRoot, test[i]));
         }
     }
 
 
-    static int findPredecessor(Node bstRoot, int key) {
-        if(bstRoot == null || bstRoot.data == key) return -1;
+    static Integer findSuccessor(Node bstRoot, int key) {
+        boolean found = false;
+        int result = -1;
         Node current = bstRoot;
-        while (true) {
-            if(key <= current.data) {
-                if(current.left == null || current.left.data == key) return current.data;
+        while (current != null) {
+            if(key < current.data) {
+                result = current.data;
+                found = true;
                 current = current.left;
             } else {
-                if(current.right == null || current.right.data == key) return current.data;
                 current = current.right;
             }
         }
+        return found ? result : null;
 
     }
     
