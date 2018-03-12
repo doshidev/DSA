@@ -12,6 +12,19 @@ public class Helper {
         System.out.println("]");
     }
 
+    public static void printArray(String[] strArray) {
+        System.out.print("[");
+        for(int i = 0; i < strArray.length; i++){
+            if(i == 0) {
+                System.out.print(strArray[i]);
+            } else {
+                System.out.print("\t" + strArray[i]);
+            }
+
+        }
+        System.out.println("]");
+    }
+
 
     public static boolean matchArray(int[] a, int[] b) {
         if(a.length != b.length) return false;
